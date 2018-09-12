@@ -31,14 +31,14 @@ class ChartWeb extends Component {
                     }
                     </style>
                     <head>
-                        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-                        ${this.props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
-                                      : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
-                        ${this.props.more ? '<script src="https://code.highcharts.com/highcharts-more.js"></script>'
+                        <script src="scripts/jquery-2.1.4.min.js"></script>
+                        ${this.props.stock ? '<script src="scripts/stock/highstock.js"></script>'
+                                      : '<script src="scripts/highcharts.js"></script>'}
+                        ${this.props.more ? '<script src="scripts/highcharts-more.js"></script>'
                                       : ''}
-                        ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
+                        ${this.props.guage ? '<script src="scripts/modules/solid-gauge.js"></script>'
                                       : ''}
-                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="scripts/modules/exporting.js"></script>
                         <script>
                         $(function () {
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
@@ -75,7 +75,7 @@ class ChartWeb extends Component {
 
         config = JSON.parse(config)
         let concatHTML = `${this.state.init}${flattenObject(config)}${this.state.end}`;
-        
+
         return (
           <View style={this.props.style}>
               <WebView
