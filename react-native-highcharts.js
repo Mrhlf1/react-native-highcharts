@@ -4,11 +4,11 @@ import {
     StyleSheet,
     Text,
     View,
-    WebView,
+    // WebView,
     Image,
     Dimensions
 } from 'react-native';
-
+import { WebView } from 'react-native-webview';
 const win = Dimensions.get('window');
 class ChartWeb extends Component {
     constructor(props){
@@ -75,7 +75,7 @@ class ChartWeb extends Component {
 
         config = JSON.parse(config)
         let concatHTML = `${this.state.init}${flattenObject(config)}${this.state.end}`;
-        
+
         return (
           <View style={this.props.style}>
               <WebView
