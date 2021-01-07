@@ -61,10 +61,10 @@ class ChartWeb extends Component {
 
     // used to resize on orientation of display
     reRenderWebView(e) {
-        this.setState({
-            height: e.nativeEvent.layout.height,
-            width: e.nativeEvent.layout.width,
-        })
+        // this.setState({
+        //     height: e.nativeEvent.layout.height,
+        //     width: e.nativeEvent.layout.width,
+        // })
     }
 
     render() {
