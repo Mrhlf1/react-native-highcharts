@@ -6,7 +6,8 @@ import {
     View,
     // WebView,
     Image,
-    Dimensions
+    Dimensions,
+    Platform,
 } from 'react-native';
 import { WebView } from 'react-native-webview';
 const win = Dimensions.get('window');
@@ -61,10 +62,10 @@ class ChartWeb extends Component {
 
     // used to resize on orientation of display
     reRenderWebView(e) {
-        // this.setState({
-        //     height: e.nativeEvent.layout.height,
-        //     width: e.nativeEvent.layout.width,
-        // })
+        this.setState({
+            height: e.nativeEvent.layout.height,
+            width: e.nativeEvent.layout.width,
+        })
     }
 
     render() {
@@ -72,25 +73,43 @@ class ChartWeb extends Component {
             return (typeof value === 'function') ? value.toString() : value;
         });
 
-
         config = JSON.parse(config)
         let concatHTML = `${this.state.init}${flattenObject(config)}${this.state.end}`;
+        if(Platform.OS === 'ios'){
+          return (
+            <View style={this.props.style}>
+                <WebView
+                    onLayout={this.reRenderWebView.bind(this)}
+                    style={styles.full}
+                    source={{ html: concatHTML}}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    scalesPageToFit={true}
+                    scrollEnabled={false}
+                    automaticallyAdjustContentInsets={false}
+                    originWhiteList={['*']}
+                    {...this.props}
+                />
+            </View>
+          );
+        }else {
+          return (
+            <View style={this.props.style}>
+                <WebView
+                    onLayout={this.reRenderWebView.bind(this)}
+                    style={styles.full}
+                    source={{ html: concatHTML, baseUrl: 'web/' }}
+                    javaScriptEnabled={true}
+                    domStorageEnabled={true}
+                    scalesPageToFit={true}
+                    scrollEnabled={false}
+                    automaticallyAdjustContentInsets={true}
+                    {...this.props}
+                />
+            </View>
+          );
+        }
 
-        return (
-          <View style={this.props.style}>
-              <WebView
-                  onLayout={this.reRenderWebView}
-                  style={styles.full}
-                  source={{ html: concatHTML, baseUrl: 'web/' }}
-                  javaScriptEnabled={true}
-                  domStorageEnabled={true}
-                  scalesPageToFit={true}
-                  scrollEnabled={false}
-                  automaticallyAdjustContentInsets={true}
-                  {...this.props}
-              />
-          </View>
-        );
     };
 };
 
